@@ -6,7 +6,7 @@ const request = require('request');
 
 exports.getRegname = (id, callback) => {
     if ((id == undefined) || (id == '') || (isNaN(id))) {
-        return callback("You must specify an ID in your request or ID must be numeric.", null);
+        return callback(new Error("You must specify an ID in your request or ID must be numeric."));
     } else {
         var admins = {
             7: 'Darren',
@@ -20,10 +20,10 @@ exports.getRegname = (id, callback) => {
         } else {
             request("http://xat.me/SlOom?id=" + id, function(error, response, body) {
                 if ((body == "") || (body.substr(0, 1) == "<")) {
-			callback("ID not found", null);
-		} else {
-			callback(null, body);
-		}
+					callback(new Error("ID not found"));
+				} else {
+					callback(null, body);
+				}
             });
         }
     }
@@ -31,7 +31,7 @@ exports.getRegname = (id, callback) => {
 
 exports.getID = (reg, callback) => {
     if ((reg == undefined) || (!isNaN(reg))) {
-        callback("You must specify a regname in your request.", null);
+        callback(new Error("You must specify a regname in your request."));
     } else {
         var admins = {
             'Darren': 7,
@@ -45,10 +45,10 @@ exports.getID = (reg, callback) => {
         } else {
             request("http://xat.me/SlOom?name=" + reg, function(error, response, body) {
                 if ((body == "") || (body.substr(0, 1) == "<")) {
-			callback("ID not found", null);
-		} else {
-			callback(null, body);
-		}
+					callback(new Error("ID not found"));
+				} else {
+					callback(null, body);
+				}
             });
         }
     }
@@ -56,12 +56,12 @@ exports.getID = (reg, callback) => {
 
 exports.getChatInfo = (chat, callback) => {
     if ((chat == undefined) || (chat == "")) {
-        callback("You must add a chat name to your request.", null);
+        callback(new Error("You must add a chat name to your request."));
     } else {
         var url = "http://xat.com/web_gear/chat/roomid.php?d=" + chat + "&v2";
         request(url, function(error, response, body) {
             if (body.substr(0, 1) == '-') {
-                callback("This chat doesn't exist.", null);
+                callback(new Error("This chat doesn't exist."));
             } else {
                 var json    = JSON.parse(body);
                 var opt     = json['a'].split(";=");
