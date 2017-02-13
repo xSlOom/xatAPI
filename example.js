@@ -1,4 +1,4 @@
-var xat        = require('./xat.js');
+var xat        = require('xatlib');
 
 //Ouput : SlOom
 xat.getRegname(110110, function(response) {
