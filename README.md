@@ -54,7 +54,7 @@ Otherwise, open a new issue.
 -->
 <h1>Credits</h1>
 <ul>
-    <li><a href="http://xat.com/">Xat.com</a> - for their API.</li>
+    <li><a href="http://xat.com/">Xat.com</a> - for their API. (Otherwise, this library wouldn't exist.)</li>
 </ul>
 
 <h1>Updates:</h1>
