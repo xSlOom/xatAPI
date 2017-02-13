@@ -13,8 +13,10 @@
   "author": "SlOom",
   "license": "MIT",
   "dependencies": {
-    "mocha": "^3.2.0",
     "request": "^2.79.0",
     "xatlib": "^2.0.1"
+  },
+  "devDependencies": {
+    "mocha": "^3.2.0"
   }
 }
