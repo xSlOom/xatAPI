@@ -12,9 +12,9 @@
   ],
   "author": "SlOom",
   "license": "MIT",
+  "main": "./source/xat",
   "dependencies": {
-    "request": "^2.79.0",
-    "xatlib": "^2.0.1"
+    "request": "^2.79.0"
   },
   "devDependencies": {
     "mocha": "^3.2.0"
