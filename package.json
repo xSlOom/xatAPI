@@ -8,6 +8,7 @@
   "author": "SlOom",
   "license": "MIT",
   "dependencies": {
-    "request": "^2.79.0"
+    "request": "^2.79.0",
+    "xatlib": "^2.0.1"
   }
 }
