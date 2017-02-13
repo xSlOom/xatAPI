@@ -20,10 +20,10 @@ exports.getRegname = (id, callback) => {
         } else {
             request("http://xat.me/SlOom?id=" + id, function(error, response, body) {
                 if ((body == "") || (body.substr(0, 1) == "<")) {
-					callback("ID not found", null);
-				} else {
-					callback(null, body);
-				}
+			callback("ID not found", null);
+		} else {
+			callback(null, body);
+		}
             });
         }
     }
@@ -45,10 +45,10 @@ exports.getID = (reg, callback) => {
         } else {
             request("http://xat.me/SlOom?name=" + reg, function(error, response, body) {
                 if ((body == "") || (body.substr(0, 1) == "<")) {
-					callback("ID not found", null);
-				} else {
-					callback(null, body);
-				}
+			callback("ID not found", null);
+		} else {
+			callback(null, body);
+		}
             });
         }
     }
