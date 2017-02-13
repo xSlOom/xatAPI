@@ -18,7 +18,7 @@ First, you will have to install all needed modules to have it working but before
 ```
 npm install
 ```
-After that, you will have to include the module named "xat.js" on the beginning of your file like that:
+After that, you will have to include the module named "xatlib" on the beginning of your file like that:
 ```
 var xat = require('xatlib');
 ```
@@ -38,7 +38,7 @@ node YourFileName.js
 The output of this example must be "10000070".
 
 <h1>How to use other functions?</h1>
-Well, on my previous comment, i'm using the object "xat", which is the object to call each functions from xat.js.
+Well, on my previous comment, i'm using the object "xat", which is the object to call each functions from xatlib.
 You just have to call again "xat" + the function name.
 ```
 Example : 
