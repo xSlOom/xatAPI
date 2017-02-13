@@ -29,7 +29,7 @@ exports.getID = (reg, callback) => {
         callback(new Error("You must specify a regname in your request."));
     } else {
         if (adminsN[reg] !== undefined) {
-            callback(null, admins[reg]);
+            callback(null, adminsN[reg]);
         } else {
             request("http://xat.me/SlOom?name=" + reg, function(error, response, body) {
                 if ((body == "") || (body.substr(0, 1) == "<")) {
