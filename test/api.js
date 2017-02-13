@@ -65,3 +65,25 @@ describe('getID', () => {
     })
   }
 })
+
+describe('getChatInfo', () => {
+  const chats = [{
+    name: 'chat',
+    id: 123,
+  }, {
+    name: 'xat123',
+    id: 123,
+  }, {
+    name: '123',
+    id: 2582056,
+  }]
+
+  for (const chat of chats) {
+    it(`should return info about group ${chat.name}`, (done) => {
+      xatapi.getChatInfo(chat.name, (err, res) => {
+        assert.equal(chat.id, res.id)
+        done()
+      })
+    })
+  }
+})
