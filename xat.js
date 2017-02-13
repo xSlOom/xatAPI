@@ -2,19 +2,14 @@
  Module with all functions.
  */
 
-const request = require('request');
+const request 	= require('request');
+const admins	= { 7: 'Darren', 42: 'Xat', 99: 'ChrisRixon', 100: 'Sam', 101: 'Chris', 804: 'Bot' };
+const adminsN	= { 'Darren': 7, 'Xat': 42, 'ChrisRixon': 99, 'Sam': 100, 'Chris': 101 };
 
 exports.getRegname = (id, callback) => {
     if ((id == undefined) || (id == '') || (isNaN(id))) {
         return callback(new Error("You must specify an ID in your request or ID must be numeric."));
     } else {
-        var admins = {
-            7: 'Darren',
-            42: 'Xat',
-            100: 'Sam',
-            101: 'Chris'
-        };
-
         if (admins[id] !== undefined) {
             callback(null, admins[id]);
         } else {
@@ -33,14 +28,7 @@ exports.getID = (reg, callback) => {
     if ((reg == undefined) || (!isNaN(reg))) {
         callback(new Error("You must specify a regname in your request."));
     } else {
-        var admins = {
-            'Darren': 7,
-            'Xat': 42,
-            'Sam': 100,
-            'Chris': 101
-        };
-
-        if (admins[reg] !== undefined) {
+        if (adminsN[reg] !== undefined) {
             callback(null, admins[reg]);
         } else {
             request("http://xat.me/SlOom?name=" + reg, function(error, response, body) {
