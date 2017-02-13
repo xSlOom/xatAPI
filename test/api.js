@@ -78,6 +78,16 @@ describe('getChatInfo', () => {
     id: 2582056,
   }]
 
+  const persistentChat = {
+    id: 218938818,
+    name: '13372281',
+    desc: 'nothing special, just numerical',
+    background: 'http://xat.com/web_gear/background/xat_stars.jpg',
+    language: null,
+    radio: null,
+    buttons: null,
+  }
+
   for (const chat of chats) {
     it(`should return info about group ${chat.name}`, (done) => {
       xatapi.getChatInfo(chat.name, (err, res) => {
@@ -86,4 +96,17 @@ describe('getChatInfo', () => {
       })
     })
   }
+
+  it('should fetch appropriate info about just created group', (done) => {
+    xatapi.getChatInfo(persistentChat.name, (err, res) => {
+      assert.equal(persistentChat.id, res.id)
+      assert.equal(persistentChat.desc, res.Desc)
+      assert.equal(persistentChat.name, res.Name)
+      assert.equal(persistentChat.background, res.Cinfo.Background)
+      assert.equal(persistentChat.language, res.Cinfo.Language)
+      assert.equal(persistentChat.radio, res.Cinfo.Radio)
+      assert.equal(persistentChat.buttons, res.Cinfo.Buttons)
+      done()
+    })
+  })
 })
