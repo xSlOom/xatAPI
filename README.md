@@ -20,12 +20,12 @@ npm install
 ```
 After that, you will have to include the module named "xat.js" on the beginning of your file like that:
 ```
-var xat = require('./xat.js');
+var xat = require('xatlib');
 ```
 
 If for example, you want to use the function "getID", your code should look like that: 
 ```
-var xat = require('./xat.js');
+var xat = require('xatlib');
 
 xat.getID('xSlOom', function(response) {
     console.log(response);
