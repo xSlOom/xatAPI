@@ -25,7 +25,7 @@ exports.getRegname = (id, callback) => {
 };
 
 exports.getID = (reg, callback) => {
-    if ((reg == undefined) || (!isNaN(reg))) {
+    if ((reg == undefined) || (reg == '') || (!isNaN(reg))) {
         callback(new Error("You must specify a regname in your request."));
     } else {
         if (adminsN[reg] !== undefined) {
