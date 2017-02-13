@@ -5,7 +5,9 @@
 const request = require('request');
 
 exports.getRegname = function(id, callback) {
-    if (isNaN(id)) {
+    if ((id == undefined)) {
+        callback("You must specify an ID in your request.");
+    } else if (isNaN(id)) {
         callback("ID must be numeric.");
     } else {
         var admins = {
@@ -26,7 +28,9 @@ exports.getRegname = function(id, callback) {
 };
 
 exports.getID = function (reg, callback) {
-    if (!isNaN(reg)) {
+    if ((reg == undefined)) {
+        callback("You must specify a regname in your request.");
+    } else if (!isNaN(reg)) {
         callback("Regname must not be numeric.");
     } else {
         var admins = {
