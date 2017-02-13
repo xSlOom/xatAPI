@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "A Xat tools.",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha"
   },
   "keywords": [
     "xat",
@@ -13,6 +13,7 @@
   "author": "SlOom",
   "license": "MIT",
   "dependencies": {
+    "mocha": "^3.2.0",
     "request": "^2.79.0",
     "xatlib": "^2.0.1"
   }
