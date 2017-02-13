@@ -1,5 +1,5 @@
 /*
- Module with all functions.
+ Preview of the file. (No need to download it since it will be installed with npm install.)
  */
 
 const request 	= require('request');
