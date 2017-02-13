@@ -52,4 +52,4 @@ xat.FunctionName(your arg, function(response) {
 </ul>
 
 <h1>Updates:</h1>
-<p>Last update: 02/12/2017</p>
+<p>Last update: 02/13/2017</p>
