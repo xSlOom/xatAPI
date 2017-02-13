@@ -4,11 +4,9 @@
 
 const request = require('request');
 
-exports.getRegname = function(id, callback) {
-    if ((id == undefined)) {
-        callback("You must specify an ID in your request.");
-    } else if (isNaN(id)) {
-        callback("ID must be numeric.");
+exports.getRegname = (id, callback) => {
+    if ((id == undefined) || (id == '') || (isNaN(id))) {
+        return callback("You must specify an ID in your request or ID must be numeric.", null);
     } else {
         var admins = {
             7: 'Darren',
@@ -18,20 +16,22 @@ exports.getRegname = function(id, callback) {
         };
 
         if (admins[id] !== undefined) {
-            callback('The regname for ' + id + ' is : ' + admins[id]);
+            callback(null, admins[id]);
         } else {
             request("http://xat.me/SlOom?id=" + id, function(error, response, body) {
-                callback((body == "" ? "Not found" : "The regname for " + id + " is : " + body));
+                if ((body == "") || (body.substr(0, 1) == "<")) {
+					callback("ID not found", null);
+				} else {
+					callback(null, body);
+				}
             });
         }
     }
 };
 
-exports.getID = function (reg, callback) {
-    if ((reg == undefined)) {
-        callback("You must specify a regname in your request.");
-    } else if (!isNaN(reg)) {
-        callback("Regname must not be numeric.");
+exports.getID = (reg, callback) => {
+    if ((reg == undefined) || (!isNaN(reg))) {
+        callback("You must specify a regname in your request.", null);
     } else {
         var admins = {
             'Darren': 7,
@@ -41,23 +41,27 @@ exports.getID = function (reg, callback) {
         };
 
         if (admins[reg] !== undefined) {
-            callback("ID for " + reg + " is : " + admins[reg]);
+            callback(null, admins[reg]);
         } else {
             request("http://xat.me/SlOom?name=" + reg, function(error, response, body) {
-                callback((body == "" ? "Not found" : "ID for " + reg + " is : " + body));
+                if ((body == "") || (body.substr(0, 1) == "<")) {
+					callback("ID not found", null);
+				} else {
+					callback(null, body);
+				}
             });
         }
     }
 };
 
-exports.getChatInfo = function (chat, callback) {
-    if (chat == undefined) {
-        callback("You must add a chat name to your request.");
+exports.getChatInfo = (chat, callback) => {
+    if ((chat == undefined) || (chat == "")) {
+        callback("You must add a chat name to your request.", null);
     } else {
         var url = "http://xat.com/web_gear/chat/roomid.php?d=" + chat + "&v2";
         request(url, function(error, response, body) {
             if (body.substr(0, 1) == '-') {
-                callback("This chat doesn't exist.");
+                callback("This chat doesn't exist.", null);
             } else {
                 var json    = JSON.parse(body);
                 var opt     = json['a'].split(";=");
@@ -72,7 +76,7 @@ exports.getChatInfo = function (chat, callback) {
                         'Buttons': opt[5].substr(0, 1) == '#' ? opt[5] : "None"
                     }
                 };
-                callback(ar);
+                callback(null, ar);
             }
         });
     }
