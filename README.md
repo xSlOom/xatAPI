@@ -47,7 +47,9 @@ xat.FunctionName(your arg, function(response) {
 });
 ```
 <h1>Questions</h1>
-"The module doesn't work." - Follow an example an try again. (Module has been tested several times and it works.)
+"The module doesn't work." - Follow and example an try again. (Module has been tested several times and it works.)
+"How can I add new functions?" - Edit the xat.js file and do a new pull request. <br /> <br />
+Otherwise, open a new issue.
 <h1>Credits</h1>
 <ul>
     <li><a href="http://xat.com/">Xat.com</a> - for their API.</li>
