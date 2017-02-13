@@ -13,6 +13,7 @@
     <li>Get a chat informations</li>
 </ul>
 
+<!--
 <h1>How to use it?</h1>
 First, you will have to install all needed modules to have it working but before you need to have <a href="https://nodejs.org/en/">NodeJS</a> and <a href="https://www.npmjs.com/">NPM</a> installed on your computer.
 ```
@@ -50,10 +51,12 @@ xat.FunctionName(your arg, function(response) {
 "The module doesn't work." - Follow and example an try again. (Module has been tested several times and it works.)<br />
 "How can I add new functions?" - Edit the xat.js file and do a new pull request. <br /> <br />
 Otherwise, open a new issue.
+-->
 <h1>Credits</h1>
 <ul>
     <li><a href="http://xat.com/">Xat.com</a> - for their API.</li>
 </ul>
 
 <h1>Updates:</h1>
+<p>We are still working on it! Feel free to fix/improve.</p>
 <p>Last update: 02/13/2017</p>
