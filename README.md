@@ -46,6 +46,8 @@ xat.FunctionName(your arg, function(response) {
     // show the response from the function
 });
 ```
+<h1>Questions</h1>
+"The module doesn't work." - Follow an example an try again. (Module has been tested several times and it works.)
 <h1>Credits</h1>
 <ul>
     <li><a href="http://xat.com/">Xat.com</a> - for their API.</li>
