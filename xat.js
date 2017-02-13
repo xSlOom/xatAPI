@@ -1,5 +1,5 @@
 /*
- Preview of the file. (No need to download it since it will be installed with npm install.)
+ Preview of the file. (No need to download it since it will be installed with npm install in node_modules/xatlib.)
  */
 
 const request 	= require('request');
