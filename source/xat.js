@@ -15,10 +15,10 @@ exports.getRegname = (id, callback) => {
         } else {
             request("http://xat.me/SlOom?id=" + id, function(error, response, body) {
                 if ((body == "") || (body.substr(0, 1) == "<")) {
-			callback(new Error("ID not found"));
-		} else {
-			callback(null, body);
-		}
+                    callback(new Error("ID not found"));
+                } else {
+                    callback(null, body);
+                }
             });
         }
     }
@@ -29,14 +29,14 @@ exports.getID = (reg, callback) => {
         callback(new Error("You must specify a regname in your request."));
     } else {
         if (adminsN[reg] !== undefined) {
-            callback(null, admins[reg]);
+            callback(null, adminsN[reg]);
         } else {
             request("http://xat.me/SlOom?name=" + reg, function(error, response, body) {
                 if ((body == "") || (body.substr(0, 1) == "<")) {
-			callback(new Error("ID not found"));
-		} else {
-			callback(null, body);
-		}
+                    callback(new Error("ID not found"));
+                } else {
+                    callback(null, body);
+                }
             });
         }
     }
@@ -58,10 +58,10 @@ exports.getChatInfo = (chat, callback) => {
                     'Name': json['g'],
                     'Desc': json['d'],
                     'Cinfo': {
-                        'Background' : opt[0] !== "" ? opt[0] : "None",
-                        'Language': opt[3] !== "" ? opt[3] : "None",
-                        'Radio': opt[4] !== "" ? opt[4] : "None",
-                        'Buttons': opt[5].substr(0, 1) == '#' ? opt[5] : "None"
+                        'Background' : opt[0] ? opt[0] : null,
+                        'Language': opt[3] ? opt[3] : null,
+                        'Radio': opt[4] ? opt[4] : null,
+                        'Buttons': opt[5] && opt[5].substr(0, 1) === '#' ? opt[5] : null
                     }
                 };
                 callback(null, ar);
