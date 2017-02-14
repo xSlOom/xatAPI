@@ -27,8 +27,12 @@ If for example, you want to use the function "getID", your code should look like
 ```
 var xat = require('xatapi');
 
-xat.getID('xSlOom', function(response) {
-    console.log(response);
+xat.getID('xSlOom', (err, res) => {
+    if (err !== null) {
+        console.log("error! : " + err);
+    } else {
+        console.log(res);
+    }    
 });
 ```
 If you want to see if it works, just run the cmd : 
@@ -42,7 +46,7 @@ Well, on my previous comment, i'm using the object "xat", which is the object to
 You just have to call again "xat" + the function name.
 ```
 Example : 
-xat.FunctionName(your arg, function(response) {
+xat.FunctionName(your arg, (err, res) => {
     // show the response from the function
 });
 ```
