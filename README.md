@@ -13,7 +13,6 @@
     <li>Get a chat informations</li>
 </ul>
 
-<!--
 <h1>How to use it?</h1>
 First, you will have to install all needed modules to have it working but before you need to have <a href="https://nodejs.org/en/">NodeJS</a> and <a href="https://www.npmjs.com/">NPM</a> installed on your computer.
 ```
@@ -21,12 +20,12 @@ npm install
 ```
 After that, you will have to include the module named "xatlib" on the beginning of your file like that:
 ```
-var xat = require('xatlib');
+var xat = require('xatapi');
 ```
 
 If for example, you want to use the function "getID", your code should look like that: 
 ```
-var xat = require('xatlib');
+var xat = require('xatapi');
 
 xat.getID('xSlOom', function(response) {
     console.log(response);
@@ -48,15 +47,14 @@ xat.FunctionName(your arg, function(response) {
 });
 ```
 <h1>Questions</h1>
-"The module doesn't work." - Follow and example an try again. (Module has been tested several times and it works.)<br />
-"How can I add new functions?" - Edit the xat.js file and do a new pull request. <br /> <br />
+"The module doesn't work." - Follow and example an try again. (Module has been tested several times and it works.)<br /><br />
 Otherwise, open a new issue.
--->
 <h1>Credits</h1>
 <ul>
     <li><a href="http://xat.com/">Xat.com</a> - for their API. (Otherwise, this library wouldn't exist.)</li>
+    <li>Huumanoid - For his help.
 </ul>
 
 <h1>Updates:</h1>
-<p>We are still working on it! Feel free to fix/improve.</p>
-<p>Last update: 02/13/2017</p>
+<p>You are now able to use it according to some feedbacks, it should working fine.</p>
+<p>Last update: 02/14/2017</p>
