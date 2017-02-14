@@ -2,7 +2,7 @@
 	This is an example on how to use the "getRegname" function and handle errors.
 */
 
-const xat = require('xatlib');
+const xat = require('xatapi');
 
 xat.getRegname('110110', (err, res) => {
     if (err != null) {
