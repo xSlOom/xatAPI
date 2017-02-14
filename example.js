@@ -1,14 +1,37 @@
-/*
-	This is an example on how to use the "getRegname" function and handle errors.
-*/
-
 const xat = require('xatapi');
 
-xat.getRegname('110110', (err, res) => {
+// getRegname example
+xat.getRegname(110110, (err, res) => {
     if (err != null) {
-	console.log('Something went wrong with your request : ' + err);
+		console.log('Something went wrong with your request : ' + err);
     } else {
-	console.log(res);
+		console.log(res);
     }
 });
-    
+
+// getID example
+xat.getID('xSlOom', (err, res) => {
+    if (err != null) {
+		console.log('Something went wrong with your request : ' + err);
+    } else {
+		console.log(res);
+    }
+});
+
+// get Chat infos
+xat.getChatInfo('rubyyy', (err, res) => {
+    if (err != null) {
+		console.log('Something went wrong with your request : ' + err);
+    } else {
+		console.log(res);
+    }
+});
+
+// get power infos
+xat.getNewInfo((err, res) => {
+    if (err != null) {
+		console.log('Something went wrong with your request : ' + err);
+    } else {
+		console.log(res);
+    }
+});
