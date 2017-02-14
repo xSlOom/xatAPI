@@ -76,7 +76,7 @@ exports.getNewInfo = (callback) => {
 	var pawns	= [];
 	var url 	= "http://xat.com/web_gear/chat/pow2.php?Sloom=" + Date.now(); // so we can have the latest page. (shrug)
 	request(url, function(error, response, body) {
-	 if ((body == false) || (body.substr(0, 1) !== "[")) {
+		if ((body == false) || (body.substr(0, 1) !== "[")) {
 			callback(new Error('Unable to read pow2 c:'));
 		} else {
 			var json	= JSON.parse(body);
