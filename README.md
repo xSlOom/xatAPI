@@ -50,6 +50,7 @@ xat.FunctionName(your arg, (err, res) => {
     // show the response from the function
 });
 ```
+If 'err' (variable for error) is null, it will show a result (res), otherwise it's an error.
 <h1>Questions</h1>
 "The module doesn't work." - Follow and example an try again. (Module has been tested several times and it works.)<br /><br />
 Otherwise, open a new issue.
