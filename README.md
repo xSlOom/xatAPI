@@ -11,6 +11,7 @@
     <li>Get a Xat Regname via ID</li>
     <li>Get a Xat ID via Regname</li>
     <li>Get a chat informations</li>
+    <li>Get new power informations</li>
 </ul>
 
 <h1>How to use it?</h1>
