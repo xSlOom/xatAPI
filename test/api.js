@@ -36,6 +36,16 @@ describe('getRegname', () => {
       done()
     })
   })
+
+  it("shouldn't be synchronous", (done) => {
+    let state = 1
+    xatapi.getRegname('foo', (err, res) => {
+      assert.equal(2, state)
+      done()
+    })
+
+    state = 2
+  })
 })
 
 describe('getID', () => {
