@@ -125,16 +125,16 @@ exports.getChatConnection = (chatID, callback) => {
         if (error) {
           return callback(error)
         }
-		var json = JSON.parse(body);
-		if (json.error) {
-			return setImmediate(() => callback(new Error("Invalid room")));
-		} else {
-			var info = {
-				'ip': json['ip'],
-				'port': json['port'],
-				'timeout': json['ctout']
-			}
-			return callback(null, info);
+	var json = JSON.parse(body);
+	if (json.error) {
+		return setImmediate(() => callback(new Error("Invalid room")));
+	} else {
+		var info = {
+			'ip': json['ip'],
+			'port': json['port'],
+			'timeout': json['ctout']
 		}
+		return callback(null, info);
+	}
     });
 };
