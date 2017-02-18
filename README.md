@@ -12,6 +12,7 @@
     <li>Get a Xat ID via Regname</li>
     <li>Get a chat informations</li>
     <li>Get new power informations</li>
+    <li>Get chat connection informations (for bots or more)</li>
 </ul>
 
 <h1>How to use it?</h1>
@@ -63,4 +64,4 @@ Otherwise, open a new issue.
 
 <h1>Updates:</h1>
 <p>You are now able to use it according to some feedbacks, it should working fine.</p>
-<p>Last update: 02/14/2017</p>
+<p>Last update: 02/18/2017</p>
