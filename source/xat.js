@@ -114,3 +114,27 @@ exports.getNewInfo = (callback) => {
 		}
 	});
 };
+
+exports.getChatConnection = (chatID, callback) => {
+    if ((chatID == undefined) || (chatID == "")) {
+        return setImmediate(() => callback(new Error("You must add a chat ID to your request.")));
+    }
+
+    var url = "https://api.illuxat.com/chatconnexion.php?roomid=" + chatID;
+    request(url, function(error, response, body) {
+        if (error) {
+          return callback(error)
+        }
+		var json = JSON.parse(body);
+		if (json.error) {
+			return setImmediate(() => callback(new Error("Invalid room")));
+		} else {
+			var info = {
+				'ip': json['ip'],
+				'port': json['port'],
+				'timeout': json['ctout']
+			}
+			return callback(null, info);
+		}
+    });
+};
