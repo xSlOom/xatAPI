@@ -1,7 +1,15 @@
 'use strict'
 
+const API_PATH = '../source/xat'
+
 const assert = require('assert')
-const xatapi = require('../source/xat')
+const fs = require('fs')
+const url = require('url')
+const path = require('path')
+
+const proxyquire = require('proxyquire')
+
+const xatapi = require(API_PATH)
 
 const users = [
 {
@@ -117,6 +125,43 @@ describe('getChatInfo', () => {
       assert.equal(persistentChat.radio, res.Cinfo.Radio)
       assert.equal(persistentChat.buttons, res.Cinfo.Buttons)
       done()
+    })
+  })
+})
+
+describe('getChatConnection', () => {
+  describe('getting connection info of chat 123', () => {
+    let json = null
+
+    const request = (uri, cb) => {
+      assert.equal(json.id, url.parse(uri, true).query.roomid)
+
+      setImmediate(() => cb(null, {}, JSON.stringify(json)))
+    }
+
+    const xatapi = proxyquire(API_PATH, { request })
+
+    before((done) => {
+      const file = path.join(__dirname, './illuxat-chatconnexion-123.json')
+      fs.readFile(file, (err, res) => {
+        if (err) throw err
+
+        json = JSON.parse(res)
+
+        done()
+      })
+    })
+
+    it('should return correct result', (done) => {
+      xatapi.getChatConnection(123, (err, res) => {
+        assert.equal(null, err)
+
+        assert.equal(json.ip, res.ip)
+        assert.equal(json.port, res.port)
+        assert.equal(json.ctout, res.timeout)
+
+        done()
+      })
     })
   })
 })
