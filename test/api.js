@@ -30,6 +30,19 @@ const makeRequestStub = (handler) => (uri, cb) => {
   setImmediate(() => handler({ uri }, (err, body) => cb(err, {}, body)))
 }
 
+// Note: callback expected to take only one argument.
+// There is no need to handle errors. if file is absent, test is corrupted.
+const getFile = (relativeFileName, cb) => {
+  const fileName = path.join(__dirname, relativeFileName)
+  fs.readFile(fileName, (err, res) => {
+    if (err) {
+      throw err
+    }
+
+    cb(res)
+  })
+}
+
 const users = [
 {
   id: 42,
@@ -151,9 +164,7 @@ describe('getChatInfo', () => {
 describe('getNewInfo', () => {
   describe('when last power is lovetest', () => {
     const request = makeRequestStub(({ uri }, cb) => {
-      fs.readFile(path.join(__dirname, './getNewInfo.json'), (err, res) => {
-        if (err) throw err
-
+      getFile('./getNewInfo.json', (res) => {
         cb(null, res.toString('utf8'))
       })
     })
@@ -203,10 +214,7 @@ describe('getChatConnection', () => {
     const xatapi = proxyquire(API_PATH, { request })
 
     before((done) => {
-      const file = path.join(__dirname, './illuxat-chatconnexion-123.json')
-      fs.readFile(file, (err, res) => {
-        if (err) throw err
-
+      getFile('./illuxat-chatconnexion-123.json', (res) => {
         json = JSON.parse(res)
 
         done()
