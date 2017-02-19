@@ -3,45 +3,13 @@
 const API_PATH = '../source/xat'
 
 const assert = require('assert')
-const fs = require('fs')
 const url = require('url')
-const path = require('path')
 
 const proxyquire = require('proxyquire')
 
+const { makeRequestStub, getFile } = require('../source/test-helpers')
+
 const xatapi = require(API_PATH)
-
-// Makes a stub for xatapi's dependency - request.
-// Returns fake request module.
-// Argument: request handler. Handler expected to take two arguments:
-// options and callback.
-//
-// Options contains only "uri" field.
-// Callback excepts two arguments: error and body (unline request's callbacks,
-// which expected to take three args: err, res, body.
-//
-// In fact, this function adapts simple callback to be a request-like module.
-// In the future, it may become required to pass non-empty "res" to cb.
-// In the future, we may find suitable to pass other things besides "uri"
-// to handler.
-// In the future, xatapi may rely on asynchrony of "request" module, that's why
-// this setImmediate thing put there.
-const makeRequestStub = (handler) => (uri, cb) => {
-  setImmediate(() => handler({ uri }, (err, body) => cb(err, {}, body)))
-}
-
-// Note: callback expected to take only one argument.
-// There is no need to handle errors. if file is absent, test is corrupted.
-const getFile = (relativeFileName, cb) => {
-  const fileName = path.join(__dirname, relativeFileName)
-  fs.readFile(fileName, (err, res) => {
-    if (err) {
-      throw err
-    }
-
-    cb(res)
-  })
-}
 
 const users = [
 {
