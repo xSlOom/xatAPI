@@ -11,6 +11,25 @@ const proxyquire = require('proxyquire')
 
 const xatapi = require(API_PATH)
 
+// Makes a stub for xatapi's dependency - request.
+// Returns fake request module.
+// Argument: request handler. Handler expected to take two arguments:
+// options and callback.
+//
+// Options contains only "uri" field.
+// Callback excepts two arguments: error and body (unline request's callbacks,
+// which expected to take three args: err, res, body.
+//
+// In fact, this function adapts simple callback to be a request-like module.
+// In the future, it may become required to pass non-empty "res" to cb.
+// In the future, we may find suitable to pass other things besides "uri"
+// to handler.
+// In the future, xatapi may rely on asynchrony of "request" module, that's why
+// this setImmediate thing put there.
+const makeRequestStub = (handler) => (uri, cb) => {
+  setImmediate(() => handler({ uri }, (err, body) => cb(err, {}, body)))
+}
+
 const users = [
 {
   id: 42,
@@ -131,15 +150,15 @@ describe('getChatInfo', () => {
 
 describe('getNewInfo', () => {
   describe('when last power is lovetest', () => {
-    const requestStub = (uri, cb) => {
+    const request = makeRequestStub(({ uri }, cb) => {
       fs.readFile(path.join(__dirname, './getNewInfo.json'), (err, res) => {
         if (err) throw err
 
-        cb(null, {}, res.toString('utf8'))
+        cb(null, res.toString('utf8'))
       })
-    }
+    })
 
-    const xatapi = proxyquire('../source/xat', { request: requestStub })
+    const xatapi = proxyquire(API_PATH, { request })
 
     it('should properly parse it', (done) => {
       xatapi.getNewInfo((err, res) => {
@@ -158,11 +177,9 @@ describe('getNewInfo', () => {
   describe('when request returns error', () => {
 
     const error = new Error('')
-    const requestStub = (uri, cb) => {
-      setImmediate(() => cb(error))
-    }
+    const request = makeRequestStub((options, cb) => cb(error))
 
-    const xatapi = proxyquire('../source/xat', { request: requestStub })
+    const xatapi = proxyquire(API_PATH, { request })
 
     it('should pass this error to caller', (done) => {
       xatapi.getNewInfo((err, res) => {
@@ -177,11 +194,11 @@ describe('getChatConnection', () => {
   describe('getting connection info of chat 123', () => {
     let json = null
 
-    const request = (uri, cb) => {
+    const request = makeRequestStub(({ uri }, cb) => {
       assert.equal(json.id, url.parse(uri, true).query.roomid)
 
-      setImmediate(() => cb(null, {}, JSON.stringify(json)))
-    }
+      cb(null, JSON.stringify(json))
+    })
 
     const xatapi = proxyquire(API_PATH, { request })
 
