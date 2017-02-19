@@ -1,6 +1,7 @@
 /*
  Preview of the file. (No need to download it since it will be installed with npm install in node_modules/xatlib.)
  */
+const url = require('url');
 
 const request 	= require('request');
 const admins	= { 7: 'Darren', 42: 'Xat', 99: 'ChrisRixon', 100: 'Sam', 101: 'Chris', 804: 'Bot' };
@@ -146,3 +147,28 @@ exports.getChatConnection = (chatID, callback) => {
         return callback(null, info);
     });
 };
+
+exports.getNewUser = (callback) => {
+    request('http://xat.com/web_gear/chat/auser3.php', (err, res, body) => {
+        if (err) return callback(err)
+
+        const { UserId, k1, k2 } = url.parse('?' + body, true).query
+
+        if (UserId == null || k1 == null || k2 == null) {
+            return callback(new Error('Service error'))
+        }
+
+        if (UserId >= 1800000000
+            || k2 == 0) {
+            return callback(new Error('Refused'))
+        }
+
+        const user = {
+            id: UserId,
+            k1,
+            k2,
+        }
+
+        callback(null, user)
+    })
+}
