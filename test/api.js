@@ -162,7 +162,7 @@ describe('getChatInfo', () => {
 })
 
 describe('getNewInfo', () => {
-  describe('when last power is lovetest', () => {
+  it('should return correct result when last power is lovetest', (done) => {
     const request = makeRequestStub(({ uri }, cb) => {
       getFile('./getNewInfo.json', (res) => {
         cb(null, res.toString('utf8'))
@@ -171,57 +171,46 @@ describe('getNewInfo', () => {
 
     const xatapi = proxyquire(API_PATH, { request })
 
-    it('should properly parse it', (done) => {
-      xatapi.getNewInfo((err, res) => {
-        assert.equal(null, err)
-        assert.equal(427, res.id)
-        assert.equal('lovetest', res.name)
-        assert.equal('LIMITED', res.status)
-        assert.deepEqual(['lovetest'], res.topsh)
-        assert.deepEqual(['ht'], res.pawns)
+    xatapi.getNewInfo((err, res) => {
+      assert.equal(null, err)
+      assert.equal(427, res.id)
+      assert.equal('lovetest', res.name)
+      assert.equal('LIMITED', res.status)
+      assert.deepEqual(['lovetest'], res.topsh)
+      assert.deepEqual(['ht'], res.pawns)
 
-        done()
-      })
+      done()
     })
   })
 
-  describe('when request returns error', () => {
+  it('should pass this error to caller when request returns error', (done) => {
 
     const error = new Error('')
     const request = makeRequestStub((options, cb) => cb(error))
 
     const xatapi = proxyquire(API_PATH, { request })
 
-    it('should pass this error to caller', (done) => {
-      xatapi.getNewInfo((err, res) => {
-        assert.equal(error, err)
-        done()
-      })
+    xatapi.getNewInfo((err, res) => {
+      assert.equal(error, err)
+      done()
     })
   })
 })
 
 describe('getChatConnection', () => {
-  describe('getting connection info of chat 123', () => {
-    let json = null
+  it('should return correct result when getting '
+    + 'connection info of chat 123', (done) => {
+    getFile('./illuxat-chatconnexion-123.json', (res) => {
+      const json = JSON.parse(res)
 
-    const request = makeRequestStub(({ uri }, cb) => {
-      assert.equal(json.id, url.parse(uri, true).query.roomid)
+      const request = makeRequestStub(({ uri }, cb) => {
+        assert.equal(json.id, url.parse(uri, true).query.roomid)
 
-      cb(null, JSON.stringify(json))
-    })
-
-    const xatapi = proxyquire(API_PATH, { request })
-
-    before((done) => {
-      getFile('./illuxat-chatconnexion-123.json', (res) => {
-        json = JSON.parse(res)
-
-        done()
+        cb(null, JSON.stringify(json))
       })
-    })
 
-    it('should return correct result', (done) => {
+      const xatapi = proxyquire(API_PATH, { request })
+
       xatapi.getChatConnection(123, (err, res) => {
         assert.equal(null, err)
 
