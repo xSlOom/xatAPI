@@ -1,4 +1,4 @@
-const xat = require('./index.js');
+const xat = require('./source/xat');
 
 // getRegname example
 xat.getRegname(110110, (err, res) => {
