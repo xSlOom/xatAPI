@@ -226,3 +226,53 @@ describe('getChatConnection', () => {
     })
   }
 })
+
+describe('getNewUser', () => {
+  it('should return result when server returns valid user', (done) => {
+    const auser3 = '&UserId=1521378774&k1=invalidated&k2=123456'
+    const parsed = url.parse('?' + auser3, true).query
+
+    const request = makeRequestStub((_, cb) => cb(null, auser3))
+
+    const xatapi = proxyquire(API_PATH, { request })
+
+    xatapi.getNewUser((err, res) => {
+      assert.equal(null, err)
+
+      assert.equal(parsed.UserId, res.id)
+      assert.equal(parsed.k1, res.k1)
+      assert.equal(parsed.k2, res.k2)
+
+      done()
+    })
+  })
+
+  it('should return error when server returns invalid user', (done) => {
+    const request = makeRequestStub((_, cb) =>
+      cb(null, '&UserId=2123456789&k1=xxxxxxxx&k2=0'))
+
+    const xatapi = proxyquire(API_PATH, { request })
+
+    xatapi.getNewUser((err) => {
+      assert.notEqual(null, err)
+
+      assert(/refused/i.test(err.message))
+
+      done()
+    })
+  })
+
+  it('should return error when server returns invalid response', (done) => {
+    const request = makeRequestStub((_, cb) =>
+      cb(null, '<html><body>Hello!</body></html>'))
+
+    const xatapi = proxyquire(API_PATH, { request })
+
+    xatapi.getNewUser((err) => {
+      assert.notEqual(null, err)
+      assert(/service/i.test(err.message))
+
+      done()
+    })
+  })
+})
