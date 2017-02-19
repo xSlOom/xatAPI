@@ -190,4 +190,39 @@ describe('getChatConnection', () => {
       })
     })
   })
+
+  // Only we can do is to test some expectations
+  it('should return result when interacting with remote API', (done) => {
+    xatapi.getChatConnection(123, (err, res) => {
+      assert.equal(null, err)
+
+      assert.equal('object', typeof(res))
+
+      assert.equal('string', typeof(res.ip))
+
+      const port = res.port
+      assert.equal('number', typeof(port))
+      assert(port >= 0 && port <= 65535)
+
+      assert.equal('number', typeof(res.timeout))
+
+      done()
+    })
+  })
+
+  const shouldError = [
+    2e10, // api returns info about chat 2^31 - 1 instead
+    2e12, // api returns empty array instead
+    2e20, // OK!
+  ]
+
+  for (const chat of shouldError) {
+    it(`should return error when getting info about chat ${chat}`, (done) => {
+      xatapi.getChatConnection(chat, (err, res) => {
+        assert.notEqual(null, err)
+
+        done()
+      })
+    })
+  }
 })
