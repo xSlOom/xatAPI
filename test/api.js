@@ -1,7 +1,15 @@
 'use strict'
 
+const API_PATH = '../source/xat'
+
 const assert = require('assert')
-const xatapi = require('../source/xat')
+const url = require('url')
+
+const proxyquire = require('proxyquire')
+
+const { makeRequestStub, getFile } = require('../source/test-helpers')
+
+const xatapi = require(API_PATH)
 
 const users = [
 {
@@ -119,4 +127,102 @@ describe('getChatInfo', () => {
       done()
     })
   })
+})
+
+describe('getNewInfo', () => {
+  it('should return correct result when last power is lovetest', (done) => {
+    const request = makeRequestStub(({ uri }, cb) => {
+      getFile('./getNewInfo.json', (res) => {
+        cb(null, res.toString('utf8'))
+      })
+    })
+
+    const xatapi = proxyquire(API_PATH, { request })
+
+    xatapi.getNewInfo((err, res) => {
+      assert.equal(null, err)
+      assert.equal(427, res.id)
+      assert.equal('lovetest', res.name)
+      assert.equal('LIMITED', res.status)
+      assert.deepEqual(['lovetest'], res.topsh)
+      assert.deepEqual(['ht'], res.pawns)
+
+      done()
+    })
+  })
+
+  it('should pass this error to caller when request returns error', (done) => {
+
+    const error = new Error('')
+    const request = makeRequestStub((options, cb) => cb(error))
+
+    const xatapi = proxyquire(API_PATH, { request })
+
+    xatapi.getNewInfo((err, res) => {
+      assert.equal(error, err)
+      done()
+    })
+  })
+})
+
+describe('getChatConnection', () => {
+  it('should return correct result when getting '
+    + 'connection info of chat 123', (done) => {
+    getFile('./illuxat-chatconnexion-123.json', (res) => {
+      const json = JSON.parse(res)
+
+      const request = makeRequestStub(({ uri }, cb) => {
+        assert.equal(json.id, url.parse(uri, true).query.roomid)
+
+        cb(null, JSON.stringify(json))
+      })
+
+      const xatapi = proxyquire(API_PATH, { request })
+
+      xatapi.getChatConnection(123, (err, res) => {
+        assert.equal(null, err)
+
+        assert.equal(json.ip, res.ip)
+        assert.equal(json.port, res.port)
+        assert.equal(json.ctout, res.timeout)
+
+        done()
+      })
+    })
+  })
+
+  // Only we can do is to test some expectations
+  it('should return result when interacting with remote API', (done) => {
+    xatapi.getChatConnection(123, (err, res) => {
+      assert.equal(null, err)
+
+      assert.equal('object', typeof(res))
+
+      assert.equal('string', typeof(res.ip))
+
+      const port = res.port
+      assert.equal('number', typeof(port))
+      assert(port >= 0 && port <= 65535)
+
+      assert.equal('number', typeof(res.timeout))
+
+      done()
+    })
+  })
+
+  const shouldError = [
+    2e10, // api returns info about chat 2^31 - 1 instead
+    2e12, // api returns empty array instead
+    2e20, // OK!
+  ]
+
+  for (const chat of shouldError) {
+    it(`should return error when getting info about chat ${chat}`, (done) => {
+      xatapi.getChatConnection(chat, (err, res) => {
+        assert.notEqual(null, err)
+
+        done()
+      })
+    })
+  }
 })

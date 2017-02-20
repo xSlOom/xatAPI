@@ -117,24 +117,32 @@ exports.getNewInfo = (callback) => {
 
 exports.getChatConnection = (chatID, callback) => {
     if ((chatID == undefined) || (chatID == "")) {
-        return setImmediate(() => callback(new Error("You must add a chat ID to your request.")));
+        return setImmediate(() =>
+          callback(new Error("You must add a chat ID to your request.")));
     }
 
     var url = "https://api.illuxat.com/chatconnexion.php?roomid=" + chatID;
     request(url, function(error, response, body) {
         if (error) {
-          return callback(error)
+            return callback(error);
         }
-	var json = JSON.parse(body);
-	if (json.error) {
-		return setImmediate(() => callback(new Error("Invalid room")));
-	} else {
-		var info = {
-			'ip': json['ip'],
-			'port': json['port'],
-			'timeout': json['ctout']
-		}
-		return callback(null, info);
-	}
+
+        try {
+            var json = JSON.parse(body);
+        } catch (e) {
+            return callback(e);
+        }
+
+        if (json.error) {
+            return callback(new Error("Invalid room"));
+        }
+
+        var info = {
+            'ip': json['ip'],
+            'port': json['port'],
+            'timeout': json['ctout']
+        }
+
+        return callback(null, info);
     });
 };
