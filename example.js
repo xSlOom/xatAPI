@@ -47,3 +47,12 @@ xat.getChatConnection(5, (err, res) => {
       console.log(res);
     }
 });
+
+// get new user from auser3
+xat.getNewUser((err, res) => {
+    if (err != null) {
+        printError(err);
+    } else {
+        console.log(res);
+    }
+});
