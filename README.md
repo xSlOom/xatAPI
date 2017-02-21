@@ -59,7 +59,7 @@ Otherwise, open a new issue.
 <h1>Credits</h1>
 <ul>
     <li><a href="http://xat.com/">Xat.com</a> - for their API. (Otherwise, this library wouldn't exist.)</li>
-    <li>Huumanoid - For his help.
+    <li><a href="https://github.com/Huumanoid">Huumanoid</a> - For his help.
 </ul>
 
 <h1>Updates:</h1>
